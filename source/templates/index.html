@@ -15,6 +15,7 @@
               <p class="card-text"> {{task.type}} </p>
               <a href="{% url 'task_view' task.pk %}" class="btn btn-primary">Подробнее</a>
               <a href="{% url 'update_task' task.pk %}" class="btn btn-primary">Редактировать</a>
+              <a href="{% url 'delete_task' task.pk %}" class="btn btn-primary">Удалить</a>
             </div>
           </div>
           {% endfor %}

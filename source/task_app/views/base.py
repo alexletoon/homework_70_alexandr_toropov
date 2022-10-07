@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import TemplateView, UpdateView
+from django.views.generic import TemplateView, UpdateView, DeleteView
 from task_app.models.task import Task
 from task_app.forms import TaskForm
 
@@ -46,4 +46,10 @@ class TaskUpdateView(UpdateView):
     form = TaskForm
     fields = ['task', 'description', 'status', 'type']
     template_name = 'update_task.html'
+    success_url = '/'
+
+
+class DeleteTask(DeleteView):
+    model = Task
+    template_name: str = 'confirm_delete.html'
     success_url = '/'

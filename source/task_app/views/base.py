@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, UpdateView
 from task_app.models.task import Task
 from task_app.forms import TaskForm
 
@@ -39,3 +39,11 @@ class AddView(TemplateView):
         # add_form = AddForm()
         # if add_form.is_valid():
         #     context['task'] = 
+
+    
+class TaskUpdateView(UpdateView):
+    model = Task
+    form = TaskForm
+    fields = ['task', 'description', 'status', 'type']
+    template_name = 'update_task.html'
+    success_url = '/'

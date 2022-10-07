@@ -1,0 +1,16 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="container mx-5">
+    <h5>Редактировать задачу</h5>
+    <hr class="line">
+  
+    <form action="" method="POST" >
+        {% csrf_token %}
+        {% include 'partials/task_form.html' with button_text='Редактировать' task=task %} 
+    </form>
+</div>
+{% endblock %}

@@ -13,14 +13,6 @@ from django.db.models import Q
 
 now = datetime.datetime.utcnow().replace(tzinfo=utc)
 
-# class IndexView(TemplateView):
-#     template_name = 'index.html'
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['tasks'] = Task.objects.all()
-#         return context
-
 class IndexView(ListView):
     template_name = 'index.html'
     context_object_name = 'tasks'
@@ -28,6 +20,7 @@ class IndexView(ListView):
     ordering = ['-created_at']
     paginate_by: int = 3
     paginate_orphans: int = 1
+    # allow_empty: bool = False
 
 
     def get(self, request, *args, **kwargs):

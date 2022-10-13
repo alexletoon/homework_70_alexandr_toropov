@@ -8,6 +8,7 @@
     {% if is_paginated %}
     {% include 'partials/pagination.html' %}
     {% endif %}
+    {% include 'partials/search.html' %}
     {% for task in tasks %}
     <div class="card my-3">
       <div class="card-header">
@@ -22,6 +23,8 @@
         <a href="{% url 'delete_task' task.pk %}" class="btn btn-primary">Удалить</a>
       </div>
     </div>
+    {% empty %}
+    <p>По данному запросу ничего не найдено</p>
     {% endfor %}
 
     {% if is_paginated %}

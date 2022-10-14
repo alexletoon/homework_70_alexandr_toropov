@@ -14,14 +14,15 @@
     <div class="container">
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">Navbar</a>
+              <a class="navbar-brand" href="{% url 'index_view' %}">Navbar</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                  <a class="nav-link active" aria-current="page" href="#">Home</a>
+                  <a class="nav-link active" aria-current="page" href="{% url 'index_view' %}">Home</a>
                   <a class="nav-link" href="{% url 'add_task' %}">Добавить задачу</a>
+                  <a class="nav-link" href="{% url 'project_list' %}">Список проектов</a>
                 {% block menu %}{% endblock %}
                 </div>
               </div>

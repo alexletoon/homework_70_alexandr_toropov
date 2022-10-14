@@ -1,5 +1,6 @@
-from django.views.generic import TemplateView, UpdateView, DeleteView, ListView, DetailView
+from django.views.generic import TemplateView, UpdateView, DeleteView, ListView, DetailView, CreateView
 from task_app.models.project import Project
+from task_app.forms import ProjectForm
 
 
 class ProjectListView(ListView):
@@ -18,5 +19,14 @@ class ProjectDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['task']: Project.tasks()
+        project = self.object
+        tasks = project.tasks.order_by('created_at')
+        context['tasks']: tasks
         return context
+
+
+class ProjectCreateView(CreateView):
+    template_name: str = 'project_add.html'
+    model = Project
+    form_class = ProjectForm
+    success_url = '/'

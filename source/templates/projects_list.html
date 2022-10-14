@@ -3,12 +3,17 @@
 
 {% block content %}
 
-
+<div class="row my-3">
+    <div class="col-10">
+        <a href="{% url 'add_project' %}" class="btn btn-primary">Создать новый проект</a>
+    </div>
+</div>
 <div class="row my-3">
   <div class="col-8 mx-auto">
     {% if is_paginated %}
     {% include 'partials/pagination.html' %}
     {% endif %}
+    <h5>Список проектов</h5>
     {% for project in projects %}
     <div class="card my-3">
       <div class="card-header">

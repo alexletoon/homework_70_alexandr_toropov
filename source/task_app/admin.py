@@ -23,7 +23,7 @@ class TaskAdmin(admin.ModelAdmin):
     list_display = ('id', 'task', 'status', 'project', 'created_at', 'changed_at')
     list_filter = ('id', 'task', 'status', 'type', 'created_at', 'changed_at')
     search_field = ('task', 'status', 'type', 'created_at', 'changed_at')
-    fields = ('task', 'description', 'status', 'type')
+    fields = ('task', 'description', 'status', 'type', 'project')
 
 
 class ProjectAdmin(admin.ModelAdmin):

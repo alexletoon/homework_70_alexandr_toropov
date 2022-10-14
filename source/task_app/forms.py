@@ -1,15 +1,10 @@
-from xml.dom import ValidationErr
 from django import forms
 from django.forms import widgets 
 from task_app.models.status import Status
-from task_app.models.type import Type
 from task_app.models.task import Task
-from django.core.validators import BaseValidator, MinLengthValidator
+from task_app.models.project import Project
 from django.core.exceptions import ValidationError
 
-# class Valid(BaseValidator):
-#      def __init__(self, limit_value=10, message='') -> None:
-#          super().__init__(limit_value, message).__init__(limit_value=limit_value, message=message)
 
 
 def title_length_validator(string):
@@ -22,7 +17,6 @@ class TaskForm(forms.ModelForm):
     task = forms.CharField(max_length=200, required=True, label='Задача', validators=(title_length_validator,))
     description = forms.CharField(max_length=2000, required=False, label='Описание', widget=widgets.Textarea)
     status = forms.ModelChoiceField(queryset=Status.objects.all(), required=True, label='Статус', widget=widgets.RadioSelect)
-    type = forms.ModelChoiceField(queryset=Type.objects.all(), required=True, label='Тип задачи', widget=widgets.RadioSelect)
 
     class Meta:
         model = Task
@@ -31,3 +25,11 @@ class TaskForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
     search = forms.CharField(max_length=100, required=False, label='Найти')
+
+
+class ProjectForm(forms.ModelForm):
+    
+    class Meta:
+        model = Project
+        fields = ['project', 'description', 'start_date', 'finish_date']
+

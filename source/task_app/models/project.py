@@ -15,5 +15,5 @@ class Project(models.Model):
 
 
     def get_tasks(self):
-        if self.tasks.count():
+        if self.tasks:
             return self.tasks.order_by('created_at')

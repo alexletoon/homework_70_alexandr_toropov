@@ -32,7 +32,7 @@
                 </button>
               </h2>
               <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                <div class="accordion-body">{{task.type}}</div>
+                <div class="accordion-body">{% for type in task.type.all %} {{type.type}} {% if not forloop.last %}, {% endif %}{% endfor %}</div>
               </div>
             </div>
           </div>

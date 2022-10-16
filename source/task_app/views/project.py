@@ -1,6 +1,7 @@
 from django.views.generic import TemplateView, UpdateView, DeleteView, ListView, DetailView, CreateView
 from task_app.models.project import Project
 from task_app.forms import ProjectForm
+from django.urls import reverse, reverse_lazy
 
 
 class ProjectListView(ListView):
@@ -29,4 +30,7 @@ class ProjectCreateView(CreateView):
     template_name: str = 'project_add.html'
     model = Project
     form_class = ProjectForm
-    success_url = '/'
+    # success_url = '/'
+
+    def get_success_url(self) -> str:
+        return reverse('project_list')

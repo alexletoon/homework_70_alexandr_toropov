@@ -1,5 +1,6 @@
 from django import forms
-from django.forms import widgets 
+from django.forms import ModelForm, SelectDateWidget, widgets
+from django.forms.widgets import DateInput
 from task_app.models.status import Status
 from task_app.models.task import Task
 from task_app.models.project import Project
@@ -28,8 +29,12 @@ class SearchForm(forms.Form):
 
 
 class ProjectForm(forms.ModelForm):
-    
+
     class Meta:
         model = Project
-        fields = ['project', 'description', 'start_date', 'finish_date']
+        fields = ['project', 'description','start_date', 'finish_date']
+        widgets = {
+            'start_date': SelectDateWidget(),
+            'finish_date': SelectDateWidget()
+        }
 

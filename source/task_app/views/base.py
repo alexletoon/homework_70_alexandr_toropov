@@ -9,6 +9,9 @@ from datetime import timedelta
 from django.utils.timezone import utc
 from django.utils.http import urlencode
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
 
 
 
@@ -63,11 +66,18 @@ class DetailView(TemplateView):
         context['task'] = get_object_or_404(Task, pk=kwargs['pk'])
         return context
 
-class AddView(CreateView):
+class AddView(LoginRequiredMixin, CreateView):
     template_name: str = 'add_task.html'
     model = Task
     form_class = TaskForm
     success_url = '/'
+
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     if not request.user.is_authenticated:
+    #         return redirect('login')
+    #     return super(AddView, self ).dispatch(request, *args, **kwargs)
+        
 
 
     def form_valid(self, form):
@@ -76,14 +86,14 @@ class AddView(CreateView):
         return super().form_valid(form)
 
 
-class TaskUpdateView(UpdateView):
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
     form_class = TaskForm
     template_name = 'update_task.html'
     success_url = '/'
 
 
-class DeleteTask(DeleteView):
+class DeleteTask(LoginRequiredMixin, DeleteView):
     model = Task
     template_name: str = 'confirm_delete.html'
     success_url = '/'

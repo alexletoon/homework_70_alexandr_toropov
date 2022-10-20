@@ -2,7 +2,8 @@ from django.views.generic import TemplateView, UpdateView, DeleteView, ListView,
 from task_app.models.project import Project
 from task_app.forms import ProjectForm
 from django.urls import reverse, reverse_lazy
-
+from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class ProjectListView(ListView):
     template_name = 'projects_list.html'
@@ -26,7 +27,7 @@ class ProjectDetailView(DetailView):
         return context
 
 
-class ProjectCreateView(CreateView):
+class ProjectCreateView(LoginRequiredMixin, CreateView):
     template_name: str = 'project_add.html'
     model = Project
     form_class = ProjectForm
@@ -34,3 +35,9 @@ class ProjectCreateView(CreateView):
 
     def get_success_url(self) -> str:
         return reverse('project_list')
+
+    
+    # def dispatch(self, request, *args, **kwargs):
+    #     if request.user.is_authenticated:
+    #         return redirect('login')
+    #     return super(ProjectCreateView, self ).dispatch(request, *args, **kwargs)

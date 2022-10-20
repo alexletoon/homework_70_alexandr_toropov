@@ -28,6 +28,7 @@ class IndexView(ListView):
         self.search_value = self.get_search_value()
         return super().get(request, *args, **kwargs)
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = self.form

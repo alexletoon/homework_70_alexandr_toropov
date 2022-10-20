@@ -10,7 +10,9 @@ class LoginView(TemplateView):
 
 
     def get(self, request, *args, **kwargs):
-        form = self.form()
+        next = request.GET.get('next')
+        form_data = {} if not next else {'next': next}
+        form = self.form(form_data)
         context = {'form': form}
         return self.render_to_response(context)
 
@@ -21,10 +23,13 @@ class LoginView(TemplateView):
             return redirect('login')
         username = form.cleaned_data.get('username')
         password = form.cleaned_data.get('password')
+        next = form.cleaned_data.get('next', None)
         user = authenticate(request, username=username, password=password)
         if not user:
             return redirect('login')
         login(request, user)
+        if next:
+            return  redirect(next)
         return redirect('index_view') 
 
 

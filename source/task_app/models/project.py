@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Project(models.Model):
@@ -8,6 +9,7 @@ class Project(models.Model):
     finish_date = models.DateField(verbose_name='Дата завершения', null=True, blank=True)
     created_at = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
     changed_at = models.DateTimeField(verbose_name='Дата изменения', auto_now=True)
+    user = models.ManyToManyField(to=User, related_name='projects', blank=True)
 
 
     def __str__(self) -> str:

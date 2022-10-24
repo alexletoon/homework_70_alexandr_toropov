@@ -30,7 +30,7 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display = ('id', 'project', 'start_date', 'finish_date', 'created_at', 'changed_at')
     list_filter = ('id', 'project', 'start_date', 'finish_date', 'created_at', 'changed_at')
     search_field = ('project', 'start_date', 'finish_date', 'created_at', 'changed_at')
-    fields = ('project', 'description', 'start_date', 'finish_date')
+    fields = ('project', 'description', 'start_date', 'finish_date', 'user')
 
 
 admin.site.register(Status, StatusAdmin)

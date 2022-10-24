@@ -34,6 +34,7 @@
         <p class="card-text"> {{project.start_date}} </p>
         <p class="card-text"> {{project.finish_date}} </p>
         <a href="{% url 'project_detail' project.pk %}" class="btn btn-primary">Подробнее</a>
+        <a href="{% url 'add_user' project.pk %}" class="btn btn-primary">Редактировать</a>
       </div>
     </div>
     {% endfor %}

@@ -73,7 +73,22 @@
     {% endfor %}
   </div>
 </div>
-
+<div class="row my-3">
+  <h5>Участники проекта</h5>
+  <hr>
+  <div class="col-6">
+    <ol class="list-group list-group-numbered">
+      {% for item in project.user.all %}
+      <li class="list-group-item">Username: {{item.username}}{% if not forloop.last %} {% endif %} </li>
+      {% endfor %}
+    </ol>
+  </div>
+</div>
+<div class="row my-3">
+  <div class="col-10">
+    <a href="{% url 'add_user' project.pk %}" class="btn btn-primary">Редактировать пользователей</a>  
+  </div>
+</div>
 
 
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="row mx-auto justify-content-center">
-        <form action="{% url 'login' %}" method="POST">
+        <form action="{% url 'register' %}" method="POST">
             <div class="col-4">
                 {% for item in form %}
                 {% csrf_token %}
@@ -17,7 +17,7 @@
                 {% endfor %}
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" value="Sign-in">Войти</button>
+            <button type="submit" class="btn btn-primary" value="Sign-in">Зарегистрироваться</button>
         </form>
     
 </div>

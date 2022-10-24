@@ -93,6 +93,7 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
     success_url = '/'
 
 
+
 class DeleteTask(LoginRequiredMixin, DeleteView):
     model = Task
     template_name: str = 'confirm_delete.html'

@@ -1,10 +1,11 @@
 from django import forms
-from django.forms import ModelForm, SelectDateWidget, widgets
+from django.forms import ModelForm, SelectDateWidget, widgets, MultipleChoiceField
 from django.forms.widgets import DateInput
 from task_app.models.status import Status
 from task_app.models.task import Task
 from task_app.models.project import Project
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 
 
@@ -32,9 +33,15 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ['project', 'description','start_date', 'finish_date']
+        fields = ['project', 'description','start_date', 'finish_date', 'user']
         widgets = {
             'start_date': SelectDateWidget(),
             'finish_date': SelectDateWidget()
         }
 
+
+class AddUserForm(forms.ModelForm):
+    # user = forms.CharField(required=False, label='Пользователи', widget=forms.RadioSelect)
+    class Meta:
+        model = Project
+        fields = ['user']

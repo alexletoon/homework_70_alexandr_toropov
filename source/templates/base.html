@@ -20,8 +20,6 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                  <a class="nav-link active" aria-current="page" href="{% url 'index_view' %}">Домой</a>
-                  <a class="nav-link" href="{% url 'project_list' %}">Список проектов</a>
                   {% if user.is_authenticated %}
                       <form action="{% url 'logout' %}" method="POST">
                         {% csrf_token %}

@@ -25,7 +25,11 @@
 </div>
 <div class="row my-3">
   <div class="col-10 mx-auto">
+    {% if user.is_authenticated %}
+    <h5>Список Ваших проектов, {{user.username}}</h5>
+    {% else %}
     <h5>Список проектов</h5>
+    {% endif %}
     {% for project in projects %}
         <div class="card my-3">
           <div class="card-header">
@@ -35,13 +39,12 @@
             <h5 class="card-title">{{project.description}}</h5>
             <p class="card-text"> {{project.start_date}} </p>
             <p class="card-text"> {{project.finish_date}} </p>
-            {% if perms.task_app.view_project %}
-              {% if request.user in project.user.all %}
+            {% if perms.task_app.view_project or request.user in project.user.all %}
                   <a href="{% url 'project_detail' project.pk %}" class="btn btn-primary">Подробнее</a>
-              {% endif %}
             {% endif %}
             {% if perms.task_app.change_project %}
-            <a href="{% url 'add_user' project.pk %}" class="btn btn-primary">Редактировать</a>
+            <a href="{% url 'add_user' project.pk %}" class="btn btn-primary">Редактировать участников</a>
+            <a href="{% url 'delete_project' project.pk %}" class="btn btn-primary">Удалить</a>
             {% endif %}
           </div>
         </div>

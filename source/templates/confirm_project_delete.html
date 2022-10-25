@@ -5,11 +5,9 @@
 <div class="col-8 mx-auto">
     <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Удалить задачу?</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{task.task}}</h6>
-          <p class="card-text">{{task.description}}</p>
-          <p class="card-text">{{task.status}}</p>
-          <p class="card-text">{{task.type}}</p>
+          <h5 class="card-title">Удалить проект?</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{project.project}}</h6>
+          <p class="card-text">{{project.description}}</p>
           <form action="" method="POST">
             {% csrf_token %}
             <input type="submit" class="btn btn-primary" value="Да">

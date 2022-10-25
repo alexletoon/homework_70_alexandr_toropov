@@ -1,3 +1,4 @@
+from urllib import request
 from django.views.generic import UpdateView, DeleteView, ListView, DetailView, CreateView
 from task_app.models.project import Project
 from task_app.forms import ProjectForm, AddUserForm
@@ -10,8 +11,15 @@ class ProjectListView(ListView):
     context_object_name = 'projects'
     model = Project
     ordering = ['-created_at']
-    paginate_by: int = 3
+    paginate_by: int = 5
     paginate_orphans: int = 1
+
+
+    def get_queryset(self):
+        if self.request.user.is_superuser or not self.request.user.is_authenticated:
+            return super().get_queryset()
+        # elif not self.request.user.is_authenticated
+        return super().get_queryset().filter(user__username=self.request.user)
 
 
 class ProjectDetailView(UserPassesTestMixin, DetailView):
@@ -46,7 +54,7 @@ class ProjectCreateView(UserPassesTestMixin, CreateView):
     
 
 
-class UpdateProjectView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
+class AddUserProjectView(UserPassesTestMixin, UpdateView):
     model = Project
     form_class = AddUserForm
     template_name: str = 'add_user.html'
@@ -62,4 +70,31 @@ class UpdateProjectView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('project_detail', kwargs={'pk': self.object.pk})
+
+
+class UpdateProjectView(UserPassesTestMixin, UpdateView):
+    model = Project
+    form_class = ProjectForm
+    template_name: str = 'update_project.html'
+    success_url = '/'
+
+    def test_func(self):
+            return self.request.user.is_superuser or  self.request.user in self.get_object().user.all() and self.request.user.has_perm('task_app.change_project')
+
+    def get(self, request, *args, **kwargs):
+        print(self.kwargs.get('pk'))
+        return super().get(request, *args, **kwargs)
+    
+
+    def get_success_url(self):
+        return reverse('project_detail', kwargs={'pk': self.object.pk})
+
+
+class DeleteProjectView(UserPassesTestMixin, DeleteView):
+    model = Project
+    template_name = 'confirm_project_delete.html'
+    success_url = '/'
+
+    def test_func(self):
+        return self.request.user.is_superuser or  self.request.user in self.get_object().user.all() and self.request.user.has_perm('task_app.delete_project')
 

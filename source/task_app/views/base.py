@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import TemplateView, UpdateView, DeleteView, ListView, CreateView
+from django.views.generic import TemplateView, UpdateView, DeleteView, ListView, CreateView, DetailView
 from task_app.forms import SearchForm
 from task_app.models.task import Task
 from task_app.models.project import Project
@@ -9,7 +9,7 @@ from datetime import timedelta
 from django.utils.timezone import utc
 from django.utils.http import urlencode
 from django.db.models import Q
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 
@@ -58,19 +58,46 @@ class IndexView(ListView):
         return None
 
 
-class DetailView(TemplateView):
+# class DetailView(UserPassesTestMixin, TemplateView):
+#     template_name: str = 'task_view.html'
+
+
+#     def test_func(self):
+#         return self.request.user in self.get_object().user.all() and self.request.user.has_perm('task_app.view_task')
+
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['task'] = get_object_or_404(Task, pk=kwargs['pk'])
+#         return context
+
+
+class DetailView(UserPassesTestMixin, DetailView):
     template_name: str = 'task_view.html'
+    model = Task
+
+
+    def test_func(self):
+        return self.request.user.is_superuser or self.request.user in self.get_object().project.user.all() and self.request.user.has_perm('task_app.view_task')
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['task'] = get_object_or_404(Task, pk=kwargs['pk'])
+        task = self.object
+        # context['task'] = get_object_or_404(Task, pk=kwargs['pk'])
+        context['task'] = task
         return context
 
-class AddView(LoginRequiredMixin, CreateView):
+
+class AddView(UserPassesTestMixin, CreateView):
     template_name: str = 'add_task.html'
     model = Task
     form_class = TaskForm
     success_url = '/'
+
+
+    def test_func(self):
+       return self.request.user.has_perm('task_app.add_task')
 
 
     # def dispatch(self, request, *args, **kwargs):
@@ -86,15 +113,22 @@ class AddView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class TaskUpdateView(LoginRequiredMixin, UpdateView):
+class TaskUpdateView(UserPassesTestMixin, UpdateView):
     model = Task
     form_class = TaskForm
     template_name = 'update_task.html'
     success_url = '/'
 
 
+    def test_func(self):
+        return self.request.user.has_perm('task_app.change_task')
 
-class DeleteTask(LoginRequiredMixin, DeleteView):
+
+
+class DeleteTask(UserPassesTestMixin, DeleteView):
     model = Task
     template_name: str = 'confirm_delete.html'
     success_url = '/'
+
+    def test_func(self):
+        return self.request.user.has_perm('task_app.delete_task')

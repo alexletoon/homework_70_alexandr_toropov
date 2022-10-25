@@ -17,7 +17,9 @@
     </div>
     <hr>
     {% if user.is_authenticated %}
-    <a href="{% url 'add_project' %}" class="btn btn-primary">Создать новый проект</a>
+      {% if perms.task_app.add_project %}
+        <a href="{% url 'add_project' %}" class="btn btn-primary">Создать новый проект</a>
+      {% endif %}
     {% endif %}
   </div>
 </div>
@@ -25,18 +27,24 @@
   <div class="col-10 mx-auto">
     <h5>Список проектов</h5>
     {% for project in projects %}
-    <div class="card my-3">
-      <div class="card-header">
-        {{project.project}}
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">{{project.description}}</h5>
-        <p class="card-text"> {{project.start_date}} </p>
-        <p class="card-text"> {{project.finish_date}} </p>
-        <a href="{% url 'project_detail' project.pk %}" class="btn btn-primary">Подробнее</a>
-        <a href="{% url 'add_user' project.pk %}" class="btn btn-primary">Редактировать</a>
-      </div>
-    </div>
+        <div class="card my-3">
+          <div class="card-header">
+            {{project.project}}
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{project.description}}</h5>
+            <p class="card-text"> {{project.start_date}} </p>
+            <p class="card-text"> {{project.finish_date}} </p>
+            {% if perms.task_app.view_project %}
+              {% if request.user in project.user.all %}
+                  <a href="{% url 'project_detail' project.pk %}" class="btn btn-primary">Подробнее</a>
+              {% endif %}
+            {% endif %}
+            {% if perms.task_app.change_project %}
+            <a href="{% url 'add_user' project.pk %}" class="btn btn-primary">Редактировать</a>
+            {% endif %}
+          </div>
+        </div>
     {% endfor %}
   </div>
 </div>

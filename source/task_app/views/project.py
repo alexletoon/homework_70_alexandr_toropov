@@ -2,7 +2,7 @@ from django.views.generic import UpdateView, DeleteView, ListView, DetailView, C
 from task_app.models.project import Project
 from task_app.forms import ProjectForm, AddUserForm
 from django.urls import reverse
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 
 class ProjectListView(ListView):
@@ -14,10 +14,14 @@ class ProjectListView(ListView):
     paginate_orphans: int = 1
 
 
-class ProjectDetailView(DetailView):
+class ProjectDetailView(UserPassesTestMixin, DetailView):
     template_name: str = 'project_detail.html'
     model = Project
 
+
+    def test_func(self):
+        return self.request.user.is_superuser or self.request.user in self.get_object().user.all() and self.request.user.has_perm('task_app.view_project')
+ 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -27,22 +31,29 @@ class ProjectDetailView(DetailView):
         return context
 
 
-class ProjectCreateView(LoginRequiredMixin, CreateView):
+class ProjectCreateView(UserPassesTestMixin, CreateView):
     template_name: str = 'project_add.html'
     model = Project
     form_class = ProjectForm
 
 
+    def test_func(self):
+        return self.request.user.has_perm('task_app.add_project')
+
+
     def get_success_url(self) -> str:
         return reverse('project_list')
+    
 
 
-class UpdateProjectView(LoginRequiredMixin, UpdateView):
+class UpdateProjectView(UserPassesTestMixin, LoginRequiredMixin, UpdateView):
     model = Project
     form_class = AddUserForm
     template_name: str = 'add_user.html'
     success_url = '/'
 
+    def test_func(self):
+            return self.request.user.is_superuser or  self.request.user in self.get_object().user.all() and self.request.user.has_perm('task_app.change_project')
 
     def get(self, request, *args, **kwargs):
         print(self.kwargs.get('pk'))

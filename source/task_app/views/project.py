@@ -1,8 +1,9 @@
-from urllib import request
+from urllib import request, response
 from django.views.generic import UpdateView, DeleteView, ListView, DetailView, CreateView
 from task_app.models.project import Project
 from task_app.forms import ProjectForm, AddUserForm
 from django.urls import reverse
+from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 
@@ -18,7 +19,6 @@ class ProjectListView(ListView):
     def get_queryset(self):
         if self.request.user.is_superuser or not self.request.user.is_authenticated:
             return super().get_queryset()
-        # elif not self.request.user.is_authenticated
         return super().get_queryset().filter(user__username=self.request.user)
 
 
@@ -81,10 +81,6 @@ class UpdateProjectView(UserPassesTestMixin, UpdateView):
     def test_func(self):
             return self.request.user.is_superuser or  self.request.user in self.get_object().user.all() and self.request.user.has_perm('task_app.change_project')
 
-    def get(self, request, *args, **kwargs):
-        print(self.kwargs.get('pk'))
-        return super().get(request, *args, **kwargs)
-    
 
     def get_success_url(self):
         return reverse('project_detail', kwargs={'pk': self.object.pk})

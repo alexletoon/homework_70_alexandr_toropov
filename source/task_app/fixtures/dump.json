@@ -180,12 +180,57 @@
   "fields": {
     "project": 7,
     "task": "Задача для проекта",
-    "description": "тофтвофтвофтвоф",
+    "description": "Создать группы с разрешениями",
     "status": 3,
     "created_at": "2022-10-20T14:25:10.083Z",
-    "changed_at": "2022-10-20T14:25:10.083Z",
+    "changed_at": "2022-10-24T20:18:56.395Z",
     "type": [
       2
+    ]
+  }
+},
+{
+  "model": "task_app.task",
+  "pk": 12,
+  "fields": {
+    "project": 2,
+    "task": "Создать группы",
+    "description": "Создать группы с резрешениями",
+    "status": 1,
+    "created_at": "2022-10-24T20:17:48.049Z",
+    "changed_at": "2022-10-24T20:17:48.049Z",
+    "type": [
+      2
+    ]
+  }
+},
+{
+  "model": "task_app.task",
+  "pk": 13,
+  "fields": {
+    "project": 8,
+    "task": "Тест разрешений",
+    "description": "Протестировать разрешения на создание заданий",
+    "status": 3,
+    "created_at": "2022-10-25T08:09:08.030Z",
+    "changed_at": "2022-10-25T08:09:08.030Z",
+    "type": [
+      3
+    ]
+  }
+},
+{
+  "model": "task_app.task",
+  "pk": 14,
+  "fields": {
+    "project": 6,
+    "task": "Тест редактирования",
+    "description": "Тест редактирования",
+    "status": 1,
+    "created_at": "2022-10-25T08:42:52.528Z",
+    "changed_at": "2022-10-25T08:42:52.528Z",
+    "type": [
+      1
     ]
   }
 },
@@ -198,7 +243,8 @@
     "start_date": "2022-10-11",
     "finish_date": "2022-10-27",
     "created_at": "2022-10-14T12:08:54.799Z",
-    "changed_at": "2022-10-14T12:08:54.799Z"
+    "changed_at": "2022-10-14T12:08:54.799Z",
+    "user": []
   }
 },
 {
@@ -210,7 +256,10 @@
     "start_date": "2022-10-17",
     "finish_date": "2022-10-29",
     "created_at": "2022-10-14T13:25:16.802Z",
-    "changed_at": "2022-10-14T13:25:16.803Z"
+    "changed_at": "2022-10-24T20:17:11.348Z",
+    "user": [
+      4
+    ]
   }
 },
 {
@@ -222,7 +271,8 @@
     "start_date": "2022-10-15",
     "finish_date": null,
     "created_at": "2022-10-15T10:41:56.922Z",
-    "changed_at": "2022-10-15T10:41:56.922Z"
+    "changed_at": "2022-10-15T10:41:56.922Z",
+    "user": []
   }
 },
 {
@@ -234,7 +284,8 @@
     "start_date": "2022-01-01",
     "finish_date": "2024-02-02",
     "created_at": "2022-10-16T17:25:09.827Z",
-    "changed_at": "2022-10-16T17:25:09.827Z"
+    "changed_at": "2022-10-16T17:25:09.827Z",
+    "user": []
   }
 },
 {
@@ -246,7 +297,8 @@
     "start_date": "2022-01-01",
     "finish_date": "2024-02-02",
     "created_at": "2022-10-16T17:25:40.951Z",
-    "changed_at": "2022-10-16T17:25:40.952Z"
+    "changed_at": "2022-10-16T17:25:40.952Z",
+    "user": []
   }
 },
 {
@@ -258,7 +310,10 @@
     "start_date": "2022-01-01",
     "finish_date": "2023-02-02",
     "created_at": "2022-10-16T17:26:47.281Z",
-    "changed_at": "2022-10-16T17:26:47.281Z"
+    "changed_at": "2022-10-24T20:14:45.225Z",
+    "user": [
+      3
+    ]
   }
 },
 {
@@ -270,25 +325,29 @@
     "start_date": "2022-01-01",
     "finish_date": "2023-02-02",
     "created_at": "2022-10-16T17:27:43.696Z",
-    "changed_at": "2022-10-16T17:27:43.696Z"
+    "changed_at": "2022-10-25T06:19:45.938Z",
+    "user": [
+      6,
+      7
+    ]
   }
 },
 {
-  "model": "auth.user",
-  "pk": 1,
+  "model": "task_app.project",
+  "pk": 8,
   "fields": {
-    "password": "pbkdf2_sha256$390000$eVZ89HgrflISbNZReITud3$jKEDxhUpKPv1TRKr29yuwB9nfqjOFQcSKHFVoP+qVzY=",
-    "last_login": "2022-10-23T14:38:19.761Z",
-    "is_superuser": true,
-    "username": "root",
-    "first_name": "",
-    "last_name": "",
-    "email": "",
-    "is_staff": true,
-    "is_active": true,
-    "date_joined": "2022-10-14T12:08:20.993Z",
-    "groups": [],
-    "user_permissions": []
+    "project": "Менеджеров проект",
+    "description": "Менеджер создал новый проект используя разрешение",
+    "start_date": "2022-11-01",
+    "finish_date": "2023-09-02",
+    "created_at": "2022-10-25T07:52:46.986Z",
+    "changed_at": "2022-10-25T11:06:54.792Z",
+    "user": [
+      4,
+      5,
+      6,
+      7
+    ]
   }
 }
 ]
